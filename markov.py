@@ -27,6 +27,7 @@ def make_chains(text_string):
     """
 
     split_string = text_string.split()
+    first_source_words = tuple(split_string[0:2])
 
     chains = {}
 
@@ -41,18 +42,34 @@ def make_chains(text_string):
         chains[key] = chains.get(key, [])
         chains[key].append(value)
 
-    return chains
+    return (chains, first_source_words)
 
 
 
 
 
-def make_text(chains):
+def make_text(chains, first_source_words):
     """Takes dictionary of markov chains; returns random text."""
 
     text = ""
 
-    # your code goes here
+    
+    #Pick a tuple seed 
+    tuple_seed = ' '.join(first_source_words)
+
+    #loop
+    while tuple_seed != ('Sam', 'I'):
+            
+
+        value_options = chains.get(tuple_seed)
+        value_choice = choice(value_options)
+
+        text += " " + value_choice
+
+        tuple_seed = (text.split()[-2], text.split()[-1])
+    
+    text += " am."
+
 
     return text
 
@@ -66,6 +83,6 @@ input_text = open_and_read_file(input_path)
 chains = make_chains(input_text)
 
 # Produce random text
-random_text = make_text(chains)
+random_text = make_text(chains[0], chains[1])
 
-print random_text
+# print random_text
