@@ -27,7 +27,7 @@ def make_chains(text_string):
     """
 
     split_string = text_string.split()
-    first_source_words = tuple(split_string[0:2])
+    # first_source_words = tuple(split_string[0:2])
 
     chains = {}
 
@@ -42,39 +42,38 @@ def make_chains(text_string):
         chains[key] = chains.get(key, [])
         chains[key].append(value)
 
-    return (chains, first_source_words)
+    return chains
 
 
 
 
 
-def make_text(chains, first_source_words):
+def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    text = ""
+    tuple_seed = choice(chains.keys())
 
+    #Pick a tuple seed
+    while tuple_seed[0][0].isupper() == False: 
+        tuple_seed = choice(chains.keys())
+
+        
     
-    #Pick a tuple seed 
-    tuple_seed = ' '.join(first_source_words)
+    text = ' '.join(tuple_seed)
+   
 
     #loop
-    while tuple_seed != ('Sam', 'I'):
-            
+    while tuple_seed[1][-1] not in ".!?":
 
         value_options = chains.get(tuple_seed)
         value_choice = choice(value_options)
-
         text += " " + value_choice
-
         tuple_seed = (text.split()[-2], text.split()[-1])
     
-    text += " am."
-
-
     return text
 
 
-input_path = "green-eggs.txt"
+input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
@@ -83,6 +82,6 @@ input_text = open_and_read_file(input_path)
 chains = make_chains(input_text)
 
 # Produce random text
-random_text = make_text(chains[0], chains[1])
+random_text = make_text(chains)
 
-# print random_text
+print random_text
