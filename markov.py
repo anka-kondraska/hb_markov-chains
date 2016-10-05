@@ -1,5 +1,7 @@
 from random import choice
+import sys
 
+file_path = sys.argv[1]
 
 def open_and_read_file(file_path):
     """Takes file path as string; returns text as string.
@@ -72,10 +74,10 @@ def make_text(chains):
     return text_sentence
 
 
-input_path = "gettysburg.txt"
+# input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+input_text = open_and_read_file(file_path)
 
 # Get a Markov chain
 chains = make_chains(input_text)
