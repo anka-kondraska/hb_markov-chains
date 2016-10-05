@@ -45,9 +45,6 @@ def make_chains(text_string):
     return chains
 
 
-
-
-
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
@@ -56,21 +53,23 @@ def make_text(chains):
     #Pick a tuple seed
     while tuple_seed[0][0].isupper() == False: 
         tuple_seed = choice(chains.keys())
-
         
-    
-    text = ' '.join(tuple_seed)
-   
+    text = [tuple_seed[0], tuple_seed[1]]
 
     #loop
-    while tuple_seed[1][-1] not in ".!?":
-
+    while text[-1][-1] not in ".!?":
+        #sets value_options to the tuple seed's values
         value_options = chains.get(tuple_seed)
+
+        #pick one of those values
         value_choice = choice(value_options)
-        text += " " + value_choice
-        tuple_seed = (text.split()[-2], text.split()[-1])
+        
+        text.append(value_choice)
+
+        tuple_seed = (text[-2], text[-1])
     
-    return text
+    text_sentence = ' '.join(text)
+    return text_sentence
 
 
 input_path = "gettysburg.txt"
